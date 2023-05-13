@@ -1,6 +1,7 @@
 #include <errno.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/ioctl.h>
 #include <unistd.h>
 
@@ -28,7 +29,8 @@ static void chop(unsigned short width) {
 	}
 
 	if (ferror(stdin)) {
-		perror("getchar");
+		const int error = errno;
+		fprintf(stderr, "%s: getchar: %s\n", argv0, strerror(error));
 		exit(1);
 	}
 }
